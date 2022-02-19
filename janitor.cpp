@@ -45,7 +45,8 @@ void delNote(std::vector <std::string> &notepad)
 	if (notepad.empty() == false) 
 	{
 		std::string number;
-		int num = -100;
+		const int WRONG_VALUE = -100;
+		int num = WRONG_VALUE;
 		std::cout << "Choose the note to delete. Write a number. " << std::endl;
 		std::cout << "If you don't want to delete any note, write N" << std::endl;
 		
@@ -67,7 +68,7 @@ void delNote(std::vector <std::string> &notepad)
 			}
 		} while (num < 0 || num > notepad.size());
 
-		if (num != -100)
+		if (num != WRONG_VALUE)
 		{
 			notepad.erase(notepad.begin() + num - 1);
 		}
