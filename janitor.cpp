@@ -24,13 +24,13 @@ std::string addNote()
 		}
 		if (num < 1 || num > 10)
 		{
-			std::cout << "Enter the proper value : ";
+			std::cout << "Enter a proper value : ";
 		}
 	} while (num < 1 || num > 10);
 
 	std::cout << "You chose :  " << rooms[num - 1] << std::endl << std::endl;
 
-	std::cout << "Write note, you want to be written down : ";
+	std::cout << "Write note to save : ";
 	std::getline(std::cin, newNote);
 	newNote = rooms[num - 1] + "  :  " + newNote;
 	
@@ -43,7 +43,7 @@ void delNote(std::vector <std::string> &notepad)
 	{
 		std::string number;
 		int num = -100;
-		std::cout << "Choose the note you want to be deleted. Write number. " << std::endl;
+		std::cout << "Choose the note to delete. Write a number. " << std::endl;
 		std::cout << "If you don't want to delete any note, write N" << std::endl;
 		
 		do
@@ -59,7 +59,7 @@ void delNote(std::vector <std::string> &notepad)
 			}
 			if (num < 0 || num > notepad.size())
 			{
-				std::cout << "Enter the proper value : ";
+				std::cout << "Enter a proper value : ";
 			}
 		} while (num < 0 || num > notepad.size());
 
@@ -70,7 +70,7 @@ void delNote(std::vector <std::string> &notepad)
 	}
 }
 
-void vievAll(std::vector <std::string> &notepad)
+void viewAll(std::vector <std::string> &notepad)
 {
 	if (notepad.empty()) {
 		std::cout << "You don't have any notes" << std::endl;
@@ -112,12 +112,12 @@ int main()
 		}
 		if (choice[0] == '2')
 		{
-			vievAll(notepad);
+			viewAll(notepad);
 			delNote(notepad);
 		}
 		if (choice[0] == '3')
 		{
-			vievAll(notepad);
+			viewAll(notepad);
 		}
 		if (choice[0] == '4')
 		{
