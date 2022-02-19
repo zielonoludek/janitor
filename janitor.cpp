@@ -39,10 +39,7 @@ std::string addNote()
 
 void delNote(std::vector <std::string> &notepad)
 {
-	if (notepad.empty()) {
-		std::cout << "You don't have any notes" << std::endl;
-	}
-	else
+	if (notepad.empty() == false) 
 	{
 		std::string number;
 		int num = -100;
@@ -127,7 +124,6 @@ int main()
 			run = false;
 		}
 	}
-
 	return 0;
 
 }
