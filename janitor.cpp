@@ -14,7 +14,7 @@ std::string addNote()
 	{
 		std::cout << i + 1 << "   " << rooms[i] << std::endl;
 	}
-	std::cout << std::endl << "Where is something to be repaired, enter room's number : ";
+	std::cout << std::endl << "Where is something to repair, enter room's number : ";
 
 	do
 	{
@@ -35,7 +35,7 @@ std::string addNote()
 
 	std::cout << "Write note to save : ";
 	std::getline(std::cin, newNote);
-	if (newNote.size() != 0) 
+	if (newNote != "")
 	{
 		newNote = rooms[num - 1] + "  :  " + newNote;
 		return newNote;
@@ -43,41 +43,40 @@ std::string addNote()
 	return newNote;
 }
 
-void delNote(std::vector <std::string> &notepad)
+void delNote(std::vector <std::string>& notepad)
 {
-	if (notepad.empty() == false) 
+	if (notepad.empty() == false)
 	{
 		std::string number;
 		const int WRONG_VALUE = -100;
 		int num = WRONG_VALUE;
-		std::cout << "Choose the note to delete. Write a number. " << std::endl;
-		std::cout << "If you don't want to delete any note, write N" << std::endl;
-		
+		std::cout << "Choose the note to delete. Write a number. " << std::endl << "If you don't want to delete any note, write N" << std::endl;
+
 		do
 		{
 			std::locale loc;
 			std::getline(std::cin, number);
-			int num = WRONG_VALUE;
-			if (number[0] == 'N') 
+			num = WRONG_VALUE;
+			if (number[0] == 'N')
 			{
 				break;
 			}
-			if (std::isdigit(number[0],loc))
+			if (std::isdigit(number[0]))
 			{
-				num = stoi(number);
+				num = stoi(number.substr(0,6));
 			}
-			if (num <= 0 || num > notepad.size())
+			if (num < 0 || num > notepad.size())
 			{
 				std::cout << "Enter a proper value : ";
 			}
 		} while (num <= 0 || num > notepad.size());
-
 		if (num != WRONG_VALUE)
 		{
 			notepad.erase(notepad.begin() + num - 1);
 		}
 	}
 }
+
 
 void viewAll(std::vector <std::string> &notepad)
 {
@@ -116,11 +115,7 @@ int main()
 		std::cout << std::endl;
 		if (choice[0] == '1')
 		{
-			std::string note = addNote();
-			if (note != "")
-			{
-				notepad.push_back(addNote());
-			}
+			notepad.push_back(addNote());
 		}
 		else if (choice[0] == '2')
 		{
