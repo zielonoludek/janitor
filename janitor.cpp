@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <locale>
 
 std::string addNote()
 {
@@ -17,8 +18,10 @@ std::string addNote()
 
 	do
 	{
+		std::locale loc;
 		std::getline(std::cin, room);
-		if (std::isdigit(room[0]))
+
+		if (std::isdigit(room[0],loc))
 		{
 			num = stoi(room);
 		}
@@ -48,12 +51,13 @@ void delNote(std::vector <std::string> &notepad)
 		
 		do
 		{
+			std::locale loc;
 			std::getline(std::cin, number);
 			if (number[0] == 'N') 
 			{
 				break;
 			}
-			if (std::isdigit(number[0]))
+			if (std::isdigit(number[0],loc))
 			{
 				num = stoi(number);
 			}
