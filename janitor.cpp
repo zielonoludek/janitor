@@ -35,8 +35,11 @@ std::string addNote()
 
 	std::cout << "Write note to save : ";
 	std::getline(std::cin, newNote);
-	newNote = rooms[num - 1] + "  :  " + newNote;
-	
+	if (newNote.size() != 0) 
+	{
+		newNote = rooms[num - 1] + "  :  " + newNote;
+		return newNote;
+	}
 	return newNote;
 }
 
@@ -93,8 +96,7 @@ void viewAll(std::vector <std::string> &notepad)
 
 void menu()
 {
-	std::cout << std::endl;
-	std::cout << "		MENU		" << std::endl;
+	std::cout << std::endl<< "		MENU		" << std::endl;
 	std::cout << "1.	Add note" << std::endl;
 	std::cout << "2.	Delete note" << std::endl;
 	std::cout << "3.	My notes" << std::endl;
@@ -103,9 +105,9 @@ void menu()
 
 int main()
 {
-	bool run = true; 
+	bool run = true;
 	std::vector <std::string> notepad;
-	
+
 	while (run)
 	{
 		menu();
@@ -114,18 +116,22 @@ int main()
 		std::cout << std::endl;
 		if (choice[0] == '1')
 		{
-			notepad.push_back(addNote());
+			std::string note = addNote();
+			if (note != "")
+			{
+				notepad.push_back(addNote());
+			}
 		}
-		if (choice[0] == '2')
+		else if (choice[0] == '2')
 		{
 			viewAll(notepad);
 			delNote(notepad);
 		}
-		if (choice[0] == '3')
+		else if (choice[0] == '3')
 		{
 			viewAll(notepad);
 		}
-		if (choice[0] == '4')
+		else if (choice[0] == '4')
 		{
 			run = false;
 		}
