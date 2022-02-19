@@ -23,7 +23,7 @@ std::string addNote()
 
 		if (std::isdigit(room[0],loc))
 		{
-			num = stoi(room);
+			num = stoi(room.substr(0,2));
 		}
 		if (num < 1 || num > 10)
 		{
@@ -108,7 +108,7 @@ int main()
 	bool run = true;
 	std::vector <std::string> notepad;
 
-	while (run)
+	while (run)`
 	{
 		menu();
 		std::string choice;
