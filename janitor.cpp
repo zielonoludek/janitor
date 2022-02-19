@@ -108,7 +108,7 @@ int main()
 	bool run = true;
 	std::vector <std::string> notepad;
 
-	while (run)`
+	while (run)
 	{
 		menu();
 		std::string choice;
