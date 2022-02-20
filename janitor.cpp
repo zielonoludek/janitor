@@ -55,13 +55,13 @@ void delNote(std::vector <std::string>& notepad)
 		do
 		{
 			std::locale loc;
+			int num = WRONG_VALUE;
 			std::getline(std::cin, number);
-			num = WRONG_VALUE;
 			if (number[0] == 'N')
 			{
 				break;
 			}
-			if (std::isdigit(number[0]))
+			else if (std::isdigit(number[0]))
 			{
 				num = stoi(number.substr(0,6));
 			}
@@ -70,6 +70,7 @@ void delNote(std::vector <std::string>& notepad)
 				std::cout << "Enter a proper value : ";
 			}
 		} while (num <= 0 || num > notepad.size());
+		
 		if (num != WRONG_VALUE)
 		{
 			notepad.erase(notepad.begin() + num - 1);
