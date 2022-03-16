@@ -1,59 +1,46 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
+#include <iterator>
 #include <locale>
+#include <map>
 
-std::string addNote()
+void addNote(std::map<std::string, std::vector <std::string>> &notepad)
 {
-	std::string rooms[10]{ "Lobby", "Office 1", "Office 2", "Server room 1", "Server room 2", "Kitchen", "Toilet", "Boardroom", "Storeroom", "Janitor's room" };
-	std::string room = "";
 	std::string newNote;
-	int num = 0;
-
-	for (int i = 0; i < 10; i++)
-	{
-		std::cout << i + 1 << "   " << rooms[i] << std::endl;
-	}
-	std::cout << std::endl << "Where is something to repair, enter room's number : ";
-
-	do
-	{
-		std::locale loc;
-		std::getline(std::cin, room);
-
-		if (std::isdigit(room[0],loc))
-		{
-			num = stoi(room.substr(0,2));
-		}
-		if (num < 1 || num > 10)
-		{
-			std::cout << "Enter a proper value : ";
-		}
-	} while (num < 1 || num > 10);
-
-	std::cout << "You chose :  " << rooms[num - 1] << std::endl << std::endl;
-
-	std::cout << "Write note to save : ";
+	std::string place;
+	std::locale loc;
+	std::cout << std::endl << "Where is something to repair? \n";
+	std::getline(std::cin, place);
+	std::cout << std::endl << "Note:  ";
 	std::getline(std::cin, newNote);
-	if (newNote != "")
-	{
-		newNote = rooms[num - 1] + "  :  " + newNote;
-		return newNote;
+
+	if (newNote != "") {
+		int help = 0;
+		for (auto i = notepad.begin(); i != notepad.end(); ++i) {
+			if (place == i->first) {
+				i->second.push_back(newNote);
+				help = 1;
+			}
+		}
+		if (help == 0) {
+			std::vector <std::string> nVec;
+			nVec.push_back(newNote);
+			notepad.insert(std::pair <std::string, std::vector<std::string>>(place, nVec));
+		}
 	}
-	return newNote;
 }
 
-void delNote(std::vector <std::string>& notepad)
+void delNote(std::map<std::string, std::vector <std::string>>& notepad)
 {
-	if (notepad.empty() == false)
-	{
+	if (notepad.empty() == false){
 		std::string number;
 		const int WRONG_VALUE = -100;
 		int num = WRONG_VALUE;
 		std::cout << "Choose the note to delete. Write a number. " << std::endl << "If you don't want to delete any note, write N" << std::endl;
 
-		do
-		{
+		do{
 			std::locale loc;
 			int num = WRONG_VALUE;
 			std::getline(std::cin, number);
@@ -61,7 +48,7 @@ void delNote(std::vector <std::string>& notepad)
 			{
 				break;
 			}
-			else if (std::isdigit(number[0]))
+			else if (std::isdigit(number[0], loc))
 			{
 				num = stoi(number.substr(0,6));
 			}
@@ -73,24 +60,26 @@ void delNote(std::vector <std::string>& notepad)
 		
 		if (num != WRONG_VALUE)
 		{
-			notepad.erase(notepad.begin() + num - 1);
+			//notepad.erase(notepad.begin() + num - 1);
 		}
 	}
 }
 
 
-void viewAll(std::vector <std::string> &notepad)
+void viewAll(std::map<std::string, std::vector <std::string>>& notepad)
 {
 	if (notepad.empty()) {
 		std::cout << "You don't have any notes" << std::endl;
 	}
 	else {
-		std::cout << "My notes: " << std::endl;
-		for (int i = 0; i < notepad.size(); i++)
-		{
-			std::cout << i + 1 << ".  " << notepad[i] << std::endl;
+		std::map< std::string, std::vector <std::string >>::iterator itr;
+		for (itr = notepad.begin(); itr != notepad.end(); ++itr) {
+			std::cout << itr->first << '\t';
+			for (auto n : itr->second) {
+				std::cout << '\t' << n;
+			}
+			std::cout << std::endl;
 		}
-		std::cout << std::endl;
 	}
 }
 
@@ -106,7 +95,7 @@ void menu()
 int main()
 {
 	bool run = true;
-	std::vector <std::string> notepad;
+	std::map<std::string, std::vector <std::string>> notepad;
 
 	while (run)
 	{
@@ -116,18 +105,13 @@ int main()
 		std::cout << std::endl;
 		if (choice[0] == '1')
 		{
-			notepad.push_back(addNote());
+			addNote(notepad);
 		}
-		else if (choice[0] == '2')
-		{
-			viewAll(notepad);
-			delNote(notepad);
-		}
-		else if (choice[0] == '3')
+		if (choice[0] == '3')
 		{
 			viewAll(notepad);
 		}
-		else if (choice[0] == '4')
+		if (choice[0] == '4')
 		{
 			run = false;
 		}
